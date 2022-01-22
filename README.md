@@ -1,1 +1,1 @@
-# nextjs 포스트 보드
+# nextjs meetups
