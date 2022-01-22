@@ -22,20 +22,16 @@ const MeetupDetails = (props) => {
 
 export const getStaticPaths = async () => {
   const client = await MongoClient.connect(process.env.MONGO_URI);
-
   const db = client.db();
-
   const meetupsCollection = db.collection("meetups");
-
   const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
-
   client.close();
 
   return {
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
