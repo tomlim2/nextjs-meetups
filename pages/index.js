@@ -24,23 +24,23 @@ const HomePage = (props) => {
 };
 
 //for generally
-export async function getServerSideProps(context) {
-  const req = context.req;
-  const res = context.res;
-  //fetch data from an API
-  return {
-    meetups: MOCKUP,
-  };
-}
-
-// //SSG for auth
-// export async function getStaticProps() {
+// export async function getServerSideProps(context) {
+//   const req = context.req;
+//   const res = context.res;
+//   //fetch data from an API
 //   return {
-//     props: {
-//       meetups: MOCKUP,
-//     },
-//     revalidate: 10,
+//     meetups: MOCKUP,
 //   };
 // }
+
+// //SSG for auth
+export async function getStaticProps() {
+  return {
+    props: {
+      meetups: MOCKUP,
+    },
+    revalidate: 10,
+  };
+}
 
 export default HomePage;

@@ -3,17 +3,16 @@ import MeetupDetail from "../../components/meetups/MeetupDetail";
 const MeetupDetails = (props) => {
   return (
     <MeetupDetail
-      image={meetupData.image}
-      title={meetupData.title}
-      address={meetupData.address}
-      description={meetupData.description}
+      image={props.meetupData.image}
+      title={props.meetupData.title}
+      address={props.meetupData.address}
+      description={props.meetupData.description}
     ></MeetupDetail>
   );
 };
 
-export async function getStaticPath() {
+export const getStaticPaths = async () => {
   return {
-    fallback: false,
     paths: [
       {
         params: {
@@ -26,13 +25,17 @@ export async function getStaticPath() {
         },
       },
     ],
+    fallback: false,
   };
-}
+};
+
 
 export async function getStaticProps(context) {
   //fetch data for a single meetup
 
   const meetupId = context.params.meetupId;
+
+  console.log(meetupId);
   return {
     props: {
       meetupData: {
