@@ -1,25 +1,24 @@
+import Head from "next/head";
 import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
 
 const HomePage = (props) => {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <>
+      <Head>
+        <title>Next meetups</title>
+        <meta
+          name="description"
+          content="nextjs와 함께 빠른 만남의 장소를 찾아보세요"
+        />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </>
+  );
 };
 
-//for generally
-// export async function getServerSideProps(context) {
-//   const req = context.req;
-//   const res = context.res;
-//   //fetch data from an API
-//   return {
-//     meetups: MOCKUP,
-//   };
-// }
-
-// //SSG for auth
 export async function getStaticProps() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://yslim:9dnjfxhRl@cluster0.b2juk.mongodb.net/nextmeetup?retryWrites=true&w=majority"
-  );
+  const client = await MongoClient.connect(process.env.MONGO_URI);
   const db = client.db();
   const meetupsCollection = db.collection("meetups");
   const meetups = await meetupsCollection.find().toArray();
